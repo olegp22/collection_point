@@ -6,8 +6,12 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.session import Base
 from .enums import UserRole
-from .assignments import TestAssignment
-from .results import ResultTest
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .assignments import TestAssignment
+    from .results import ResultTest
 
 class User(Base):
     __tablename__ = "Users"
@@ -25,5 +29,13 @@ class User(Base):
     patronymic: Mapped[str | None] = mapped_column(Text, nullable=True)
     password: Mapped[str] = mapped_column(Text, nullable=False)
 
-    results: Mapped[list["ResultTest"]] = relationship(back_populates="User")
-    assignments: Mapped[list["TestAssignment"]] = relationship(back_populates="User")
+    results: Mapped[list["ResultTest"]] = relationship(back_populates="user")
+    assignments: Mapped[list["TestAssignment"]] = relationship(back_populates="user")
+
+
+class Employes_code(Base):
+    __tablename__ = "employes_code"
+
+    code: Mapped[str] = mapped_column(Text, primary_key=True)
+    role: Mapped[str] = mapped_column(SAEnum(UserRole, name="role_user", values_callable=lambda enum: [e.value for e in enum]),
+            nullable=False)

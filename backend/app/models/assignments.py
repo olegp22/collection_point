@@ -3,9 +3,12 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.session import Base
 from .enums import AssignmentSource, AssignmentStatus
-from .users import User
-from .tests import Test
-from .testings import Testing
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .users import User
+    from .tests import Test
+    from .testings import Testing
 
 """
 Назначение тестов вручную или самостоятельное запись

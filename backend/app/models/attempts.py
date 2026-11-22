@@ -7,8 +7,11 @@ from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.session import Base
-from .results import ResultTest
-from .questions import (Question, AnswerOption, OrderingItem)
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .results import ResultTest
+    from .questions import (Question, AnswerOption, OrderingItem)
 
 class UserAnswer(Base):
     __tablename__ = "UserAnswers"

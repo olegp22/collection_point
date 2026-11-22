@@ -3,9 +3,12 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.session import Base
 from .enums import TestingStatus
-from .results import ResultTest
-from .assignments import TestAssignment
-from .tests import Test
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .results import ResultTest
+    from .assignments import TestAssignment
+    from .tests import Test
 
 class Testing(Base):
     __tablename__ = "Testings"

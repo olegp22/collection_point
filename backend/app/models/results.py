@@ -6,10 +6,13 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.session import Base
-from .users import User
-from .tests import Test
-from .testings import Testing
-from .attempts import UserAnswer
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .users import User
+    from .tests import Test
+    from .testings import Testing
+    from .attempts import UserAnswer
 
 class ResultTest(Base):
     __tablename__ = "ResultTest"

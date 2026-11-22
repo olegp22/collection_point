@@ -6,9 +6,12 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.session import Base
 from .enums import QuestionType, MatchingSide
-from .attempts import (UserAnswer, StudentSelectedOption,
-                       StudentOrderingAnswer)
-from .tests import TestQuestion
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .attempts import (UserAnswer, StudentSelectedOption,
+                        StudentOrderingAnswer)
+    from .tests import TestQuestion
 
 class Question(Base):
     __tablename__ = "Questions"

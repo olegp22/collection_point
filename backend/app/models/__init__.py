@@ -1,5 +1,5 @@
 # Импортируем все модели, чтобы SQLAlchemy зарегистрировал их в Base.metadata.
-from .Users import User
+from .users import User
 from .questions import (
     Question, AnswerOption, MatchingItem, MatchingPair,
     OrderingItem, ParameterizedTask, TaskParameter,

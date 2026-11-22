@@ -23,4 +23,5 @@ def get_db():
     finally:
         db.close()
 
-Base = DeclarativeBase() 
+class Base(DeclarativeBase):
+    pass

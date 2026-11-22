@@ -5,10 +5,13 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.session import Base
 from .enums import GradingMode
-from .results import ResultTest
-from .testings import TestingTest
-from .assignments import TestAssignment
-from .questions import Question
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .results import ResultTest
+    from .testings import TestingTest
+    from .assignments import TestAssignment
+    from .questions import Question
 
 class Test(Base):
     __tablename__ = "Tests"

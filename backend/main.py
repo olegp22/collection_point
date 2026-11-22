@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.user import users_router
+from app.api.auth import auth_router
+
 app = FastAPI()
 
 # Список адресов, с которых можно делать запросы (пока локально)
@@ -17,3 +20,6 @@ app.add_middleware(
     allow_methods=["*"], # Разрешаем все методы (GET, POST, PUT, DELETE)
     allow_headers=["*"], # Разрешаем все заголовки (включая Authorization)
 )
+
+app.include_router(users_router)
+app.include_router(auth_router)
