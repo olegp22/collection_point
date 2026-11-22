@@ -1,21 +1,33 @@
-import React from 'react';
-import { 
-  Search, Bell, HelpCircle, Home as HomeIcon, 
-  ChevronDown, MoreVertical
+
+import {
+  Search,
+  ChevronDown,
+  MoreVertical,
 } from 'lucide-react';
 
 import { mockTestsData } from '../data/tests';
 
-const StatusBadge = ({ type, label }: { type: string, label: string }) => {
+const StatusBadge = ({
+  type,
+  label,
+}: {
+  type: 'active' | 'draft' | 'archive';
+  label: string;
+}) => {
   const styles = {
-    active: "bg-[#1C3A2B] text-[#4ADE80]",
-    draft: "bg-[#21262D] text-[#8B949E]",
-    archive: "bg-[#21262D] text-[#8B949E]",
+    active: 'bg-[#12271F] text-[#3FB950]',
+    draft: 'bg-[#21262D] text-[#8B949E]',
+    archive: 'bg-[#21262D] text-[#8B949E]',
   };
 
   return (
-    <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium w-max ${styles[type as keyof typeof styles]}`}>
-      <div className={`w-1.5 h-1.5 rounded-full ${type === 'active' ? 'bg-[#4ADE80]' : 'bg-[#8B949E]'}`}></div>
+    <div className={`flex items-center gap-2 px-2.5 py-1 rounded-md 
+    text-xs font-medium min-w-[125px] ${styles[type]}`}>
+      <span
+        className={`w-1.5 h-1.5 rounded-full ${
+          type === 'active' ? 'bg-[#3FB950]' : 'bg-[#8B949E]'
+        }`}
+      />
       {label}
     </div>
   );
@@ -23,193 +35,244 @@ const StatusBadge = ({ type, label }: { type: string, label: string }) => {
 
 export const Home = () => {
   return (
-    // Убрали flex-row для всего экрана, теперь это flex-col
-    <div className="flex flex-col h-screen w-full overflow-hidden bg-dark-bg">
-      
-      {/* --- ВЕРХНЯЯ ШАПКА (На всю ширину) --- */}
-      <header className="h-16 flex-shrink-0 flex items-center justify-between px-6 border-b border-dark-border bg-dark-panel relative z-20">
-        
-        {/* Левая часть: Логотип */}
-        <div className="flex items-center gap-3 z-10">
-          <svg className="w-6 h-6 flex-shrink-0" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="100" height="100" rx="24" fill="#58A6FF" />
-            <polygon points="50,22 74,36 74,64 50,78 26,64 26,36" fill="#0D1117" stroke="#0D1117" strokeWidth="4" strokeLinejoin="round" />
-          </svg>
-          <span className="font-semibold text-sm">testcore</span>
-        </div>
+    <div className="h-full min-h-0 flex flex-col p-4 md:p-6">
 
-        {/* Центральная часть: Поиск (Абсолютное центрирование) */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-96 max-w-[40vw]">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#58A6FF]" />
-          <input 
-            type="text" 
-            placeholder="поиск..." 
-            className="w-full bg-input-bg border border-dark-border text-sm rounded-md py-2 pl-9 pr-4 focus:outline-none focus:border-accent text-text-main placeholder:text-text-muted"
-          />
-        </div>
+      <div className="max-w-[1600px] w-full mx-auto flex-1 min-h-0 flex flex-col">
 
-        {/* Правая часть: Иконки */}
-        <div className="flex items-center gap-4 text-text-muted z-10">
-          <button className="hover:text-text-main transition-colors"><Bell className="w-5 h-5" /></button>
-          <button className="hover:text-text-main transition-colors"><HelpCircle className="w-5 h-5" /></button>
-          <div className="w-8 h-8 rounded-full bg-dark-border flex items-center justify-center text-xs text-text-main cursor-pointer">
-            ИП
+        {/* Заголовок */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-3 flex-shrink-0">
+
+          <div>
+            <h1 className="text-2xl font-semibold text-[#E6EDF3] mb-1">
+              Тестирования
+            </h1>
+
+            <p className="text-sm text-[#8B949E]">
+              Кампании: основной тест + дополнительные по условию
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+
+            <button
+              type="button"
+              className="border border-[#30363D] bg-[#161B22] hover:bg-[#21262D]
+              text-[#E6EDF3] px-3 py-2 rounded-lg text-sm transition-colors"
+            >
+              Отчёт
+            </button>
+
+            <button
+              type="button"
+              className="bg-[#58A6FF] hover:bg-[#388BFD] text-[#0D1117] 
+              font-semibold px-3 py-2 rounded-lg text-sm transition-colors"
+            >
+              + Новое тестирование
+            </button>
+
           </div>
         </div>
-      </header>
 
-      {/* --- ОСНОВНАЯ ЧАСТЬ (Сайдбар + Контент) --- */}
-      <div className="flex flex-1 overflow-hidden">
-        
-        {/* САЙДБАР */}
-        <aside className="w-[240px] flex-shrink-0 bg-dark-panel flex flex-col border-r border-dark-border">
-          <nav className="flex-1 py-4 px-3 flex flex-col gap-1">
-            <a href="#" className="flex items-center gap-3 px-3 py-2 text-text-muted hover:text-white hover:bg-dark-hover rounded-lg transition-colors text-sm">
-              <HomeIcon className="w-4 h-4" /> Обзор
-            </a>
-            <a href="#" className="flex items-center justify-between px-3 py-2 bg-[#0D1117] text-white rounded-lg text-sm border-l-2 border-accent">
-              <span>Тестирования</span>
-              <span className="text-xs text-accent">4</span>
-            </a>
-            <a href="#" className="flex items-center justify-between px-3 py-2 text-text-muted hover:text-white hover:bg-dark-hover rounded-lg transition-colors text-sm">
-              <span>Тесты</span>
-              <span className="text-xs bg-dark-border px-1.5 py-0.5 rounded text-text-muted">12</span>
-            </a>
-            <a href="#" className="flex items-center px-3 py-2 text-text-muted hover:text-white hover:bg-dark-hover rounded-lg transition-colors text-sm">
-              <span>Результаты</span>
-            </a>
-            <a href="#" className="flex items-center px-3 py-2 text-text-muted hover:text-white hover:bg-dark-hover rounded-lg transition-colors text-sm">
-              <span>Студенты</span>
-            </a>
-            <a href="#" className="flex items-center px-3 py-2 text-text-muted hover:text-white hover:bg-dark-hover rounded-lg transition-colors text-sm">
-              <span>Настройки</span>
-            </a>
-            <div className="w-full border-t border-[#21262D] mt-2"></div>
-          </nav>
-        </aside>
+        {/* Поиск и фильтры */}
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-3 flex-shrink-0">
 
-        {/* КОНТЕНТ */}
-        <main className="flex-1 flex flex-col min-w-0 overflow-auto">
-          <div className="p-8">
-            <div className="max-w-6xl mx-auto">
-              
-              <div className="flex items-end justify-between mb-6">
-                <div>
-                  <h1 className="text-2xl font-semibold mb-1">Тестирования</h1>
-                  <p className="text-sm text-text-muted">Кампании: основной тест + дополнительные по условию</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <button className="border border-dark-border text-text-main hover:bg-dark-hover px-4 py-2 rounded-md text-sm transition-colors">
-                    Отчет
-                  </button>
-                  <button className="bg-accent hover:bg-[#4b90e6] text-[#0D1117] font-semibold px-4 py-2 rounded-md text-sm transition-colors">
-                    + Новое тестирование
-                  </button>
-                </div>
-              </div>
+          <div className="flex flex-wrap items-center gap-2">
 
-              {/* Фильтры */}
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="relative w-64">
-                    <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
-                    <input 
-                      type="text" 
-                      placeholder="Поиск" 
-                      className="w-full bg-input-bg border border-dark-border text-sm rounded-md py-2 pl-9 pr-4 focus:outline-none focus:border-accent text-white placeholder:text-text-muted"
-                    />
-                  </div>
-                  
-                  <div className="relative">
-                    <select className="appearance-none bg-input-bg border border-dark-border text-sm rounded-md py-2 pl-3 pr-10 focus:outline-none focus:border-accent text-white w-32 cursor-pointer">
-                      <option>Статус</option>
-                      <option>Активно</option>
-                      <option>Черновик</option>
-                      <option>Архив</option>
-                    </select>
-                    <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" />
-                  </div>
+            <div className="relative w-full sm:w-[300px]">
 
-                  <div className="relative">
-                    <select className="appearance-none bg-input-bg border border-dark-border text-sm rounded-md py-2 pl-3 pr-10 focus:outline-none focus:border-accent text-white w-32 cursor-pointer">
-                      <option>Спец.</option>
-                      <option>Аналитик</option>
-                      <option>Программист</option>
-                      <option>QA</option>
-                    </select>
-                    <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" />
-                  </div>
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#6E7681]" />
 
-                  <div className="relative">
-                    <select className="appearance-none bg-input-bg border border-dark-border text-sm rounded-md py-2 pl-3 pr-10 focus:outline-none focus:border-accent text-white w-32 cursor-pointer">
-                      <option>Период</option>
-                    </select>
-                    <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" />
-                  </div>
-                </div>
-                
-                <div className="text-sm text-text-muted">
-                  Показано 4 из 12
-                </div>
-              </div>
-
-              {/* Таблица */}
-              <div className="w-full">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b border-dark-border text-xs text-text-muted uppercase tracking-wider bg-dark-table">
-                      <th className="py-3 px-4 w-12 rounded-l-md">
-                        <div className="w-4 h-4 rounded border border-[#4A4B52] bg-dark-bg"></div>
-                      </th>
-                      <th className="py-3 px-4 font-medium">Название кампании</th>
-                      <th className="py-3 px-4 font-medium">Состав</th>
-                      <th className="py-3 px-4 font-medium">Статус</th>
-                      <th className="py-3 px-4 font-medium">Прошли</th>
-                      <th className="py-3 px-4 font-medium">Дедлайн</th>
-                      <th className="py-3 px-4 w-12 rounded-r-md"></th>
-                    </tr>
-                  </thead>
-                  
-                  <tbody className="divide-y divide-dark-border">
-                    {mockTestsData.map((test) => (
-                      <tr key={test.id} className="hover:bg-[#161B22] transition-colors group">
-                        <td className="py-4 px-4">
-                          <div className="w-4 h-4 rounded border border-[#4A4B52] bg-dark-bg group-hover:border-accent cursor-pointer"></div>
-                        </td>
-                        <td className="py-4 px-4">
-                          <div className="flex flex-col">
-                            <div className="text-sm font-medium text-text-main mb-0.5">
-                              <span className="whitespace-nowrap">{test.title}</span>
-                            </div>
-                            <span className="text-xs text-text-muted">{test.subtitle}</span>
-                          </div>
-                        </td>
-                        <td className="py-4 px-4 text-sm text-text-main whitespace-nowrap">
-                          {test.composition}
-                        </td>
-                        <td className="py-4 px-4">
-                          <StatusBadge type={test.statusType} label={test.status} />
-                        </td>
-                        <td className="py-4 px-4 text-sm text-text-main">
-                          {test.passed}
-                        </td>
-                        <td className="py-4 px-4 text-sm text-text-main whitespace-nowrap">
-                          {test.endDate}
-                        </td>
-                        <td className="py-4 px-4 text-right">
-                          <button className="text-text-muted hover:text-text-main transition-colors">
-                            <MoreVertical className="w-5 h-5" />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <input
+                type="text"
+                placeholder="Поиск кампании..."
+                className="w-full h-9 bg-[#010409] border border-[#30363D] 
+                rounded-lg pl-9 pr-3 text-sm text-[#E6EDF3] 
+                placeholder:text-[#6E7681] outline-none focus:border-[#58A6FF]"
+              />
 
             </div>
+
+            <div className="relative">
+
+              <select
+                defaultValue=""
+                className="appearance-none h-9 w-[108px] bg-[#010409] border 
+                border-[#30363D] rounded-lg pl-3 pr-8 text-sm text-[#E6EDF3] 
+                outline-none focus:border-[#58A6FF] cursor-pointer"
+              >
+                <option value="">Статус</option>
+                <option value="active">Активно</option>
+                <option value="draft">Черновик</option>
+                <option value="archive">Архив</option>
+              </select>
+
+              <ChevronDown className="w-3.5 h-3.5 absolute right-2.5 top-1/2 
+              -translate-y-1/2 text-[#8B949E] pointer-events-none" />
+
+            </div>
+
+            <div className="relative">
+
+              <select
+                defaultValue=""
+                className="appearance-none h-9 w-[98px] bg-[#010409] 
+                border border-[#30363D] rounded-lg pl-3 pr-8 text-sm text-[#E6EDF3] outline-none focus:border-[#58A6FF] cursor-pointer"
+              >
+                <option value="">Спец.</option>
+                <option>Аналитик</option>
+                <option>Программист</option>
+                <option>QA</option>
+                <option>Тимлид</option>
+              </select>
+
+              <ChevronDown className="w-3.5 h-3.5 absolute right-2.5 
+              top-1/2 -translate-y-1/2 text-[#8B949E] pointer-events-none" />
+
+            </div>
+
+            <div className="relative">
+
+              <select
+                defaultValue=""
+                className="appearance-none h-9 w-[114px] bg-[#010409] 
+                border border-[#30363D] rounded-lg pl-3 pr-8 text-sm 
+                text-[#E6EDF3] outline-none focus:border-[#58A6FF] cursor-pointer"
+              >
+                <option value="">Период</option>
+                <option>Последняя неделя</option>
+                <option>Последний месяц</option>
+                <option>Последний год</option>
+              </select>
+
+              <ChevronDown className="w-3.5 h-3.5 absolute right-2.5 
+              top-1/2 -translate-y-1/2 text-[#8B949E] pointer-events-none" />
+
+            </div>
+
           </div>
-        </main>
+
+          <div className="text-xs text-[#8B949E] whitespace-nowrap">
+            Показано {mockTestsData.length} из 12
+          </div>
+
+        </div>
+
+        {/* Прокручиваемая таблица */}
+        <div className="flex-1 min-h-0 w-full overflow-auto">
+
+          <table className="w-full min-w-[950px] text-left border-collapse">
+
+            <thead className="sticky top-0 z-10 bg-[#161B22]">
+
+              <tr className="border-b border-[#30363D] text-xs 
+              text-[#8B949E] uppercase tracking-wider">
+
+                <th className="py-2.5 px-3 w-[45px] bg-[#161B22]"></th>
+
+                <th className="py-2.5 px-3 font-semibold bg-[#161B22]">
+                  Название кампании
+                </th>
+
+                <th className="py-2.5 px-3 font-semibold w-[160px] bg-[#161B22]">
+                  Состав
+                </th>
+
+                <th className="py-2.5 px-3 font-semibold w-[150px] bg-[#161B22]">
+                  Статус
+                </th>
+
+                <th className="py-2.5 px-3 font-semibold w-[100px] bg-[#161B22]">
+                  Прошли
+                </th>
+
+                <th className="py-2.5 px-3 font-semibold w-[140px] bg-[#161B22]">
+                  Дедлайн
+                </th>
+
+                <th className="py-2.5 px-3 w-[45px] bg-[#161B22]"></th>
+
+              </tr>
+
+            </thead>
+
+            <tbody className="divide-y divide-[#21262D]">
+
+              {mockTestsData.map((test) => (
+
+                <tr
+                  key={test.id}
+                  className="group hover:bg-[#161B22] transition-colors"
+                >
+
+                  <td className="py-2.5 px-3">
+
+                    <input
+                      type="checkbox"
+                      aria-label={`Выбрать ${test.title}`}
+                      className="w-4 h-4 accent-[#58A6FF] cursor-pointer"
+                    />
+
+                  </td>
+
+                  <td className="py-2.5 px-3">
+
+                    <div className="flex flex-col gap-0.5">
+
+                      <span className="text-sm font-semibold text-[#E6EDF3]">
+                        {test.title}
+                      </span>
+
+                      <span className="text-xs text-[#8B949E]">
+                        {test.subtitle}
+                      </span>
+
+                    </div>
+
+                  </td>
+
+                  <td className="py-2.5 px-3 text-sm text-[#E6EDF3] whitespace-nowrap">
+                    {test.composition}
+                  </td>
+
+                  <td className="py-2.5 px-3">
+
+                    <StatusBadge
+                      type={test.statusType}
+                      label={test.status}
+                    />
+
+                  </td>
+
+                  <td className="py-2.5 px-3 text-sm text-[#E6EDF3]">
+                    {test.passed}
+                  </td>
+
+                  <td className="py-2.5 px-3 text-sm text-[#8B949E] whitespace-nowrap">
+                    {test.endDate}
+                  </td>
+
+                  <td className="py-2.5 px-3 text-right">
+
+                    <button
+                      type="button"
+                      aria-label={`Действия: ${test.title}`}
+                      className="text-[#8B949E] hover:text-white transition-colors"
+                    >
+                      <MoreVertical className="w-5 h-5" />
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </table>
+
+        </div>
+
       </div>
     </div>
   );
