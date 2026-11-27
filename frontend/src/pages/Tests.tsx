@@ -1,10 +1,7 @@
 
 import { useMemo, useState } from 'react';
 
-import {
-  Search,
-  ChevronDown,
-} from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 import { mockTestsLibraryData } from '../data/testsLibrary';
 
@@ -17,19 +14,16 @@ const UsedInBadge = ({
 }) => {
   if (count === null || count === 0) {
     return (
-      <div className="flex items-center gap-2 px-2.5 py-1 rounded-md 
-      text-sm font-medium w-full max-w-[220px] bg-[#21262D] text-[#8B949E]">
-        <div className="w-2 h-2 rounded-full bg-[#8B949E] shrink-0" />
+      <div className="flex w-full max-w-55 items-center gap-2 rounded-md bg-dark-hover px-2.5 py-1 text-sm font-medium text-text-muted">
+        <div className="h-2 w-2 shrink-0 rounded-full bg-text-muted" />
         не используется
       </div>
     );
   }
 
   return (
-    <div className="flex items-center gap-2 px-2.5 py-1 
-    rounded-md text-sm font-medium w-full max-w-[220px] 
-    bg-[#172331] text-[#58A6FF]">
-      <div className="w-2 h-2 rounded-full bg-[#58A6FF] shrink-0" />
+    <div className="flex w-full max-w-55 items-center gap-2 rounded-md bg-[#172331] px-2.5 py-1 text-sm font-medium text-accent">
+      <div className="h-2 w-2 shrink-0 rounded-full bg-accent" />
       {count} {count === 1 ? 'кампания' : count >= 2 && count <= 4 ? 'кампании' : 'кампаний'}
     </div>
   );
@@ -57,27 +51,26 @@ export const Tests = () => {
   }, [search, usageFilter]);
 
   return (
-    <div className="h-full min-h-0 flex flex-col p-3 md:p-5 lg:p-6">
+    <div className="flex h-full min-h-0 flex-col p-3 md:p-5 lg:p-6">
 
-      <div className="max-w-[1600px] w-full mx-auto flex-1 min-h-0 flex flex-col">
+      <div className="mx-auto flex w-full max-w-400 min-h-0 flex-1 flex-col">
 
         {/* Заголовок */}
-        <div className="flex flex-wrap items-start justify-between gap-3 mb-3 flex-shrink-0">
+        <div className="mb-3 flex shrink-0 flex-wrap items-start justify-between gap-3">
 
           <div>
-            <h1 className="text-2xl font-semibold text-[#E6EDF3]">
+            <h1 className="text-2xl font-semibold text-text-main">
               Библиотека тестов
             </h1>
 
-            <p className="text-sm text-[#8B949E] mt-1">
+            <p className="mt-1 text-sm text-text-muted">
               Переиспользуемые наборы вопросов
             </p>
           </div>
 
           <button
             type="button"
-            className="h-[42px] bg-[#58A6FF] hover:bg-[#388BFD] 
-            text-[#0D1117] font-semibold px-5 rounded-lg text-sm transition-colors whitespace-nowrap"
+            className="h-10 shrink-0 whitespace-nowrap rounded-lg bg-accent px-5 text-sm font-semibold text-dark-bg transition-colors hover:bg-[#388BFD]"
           >
             + Новый тест
           </button>
@@ -85,18 +78,16 @@ export const Tests = () => {
         </div>
 
         {/* Поиск и фильтры */}
-        <div className="flex flex-wrap items-center gap-3 mb-2 flex-shrink-0">
+        <div className="mb-2 flex shrink-0 flex-wrap items-center gap-3">
 
-          <div className="relative w-full sm:w-[357px]">
+          <div className="relative w-full sm:w-89.25">
 
             <input
               type="text"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Поиск названия..."
-              className="w-full h-[40px] bg-[#010409] border 
-              border-[#30363D] rounded-lg px-3.5 text-sm text-[#E6EDF3] 
-              placeholder:text-[#6E7681] outline-none focus:border-[#58A6FF]"
+              className="h-10 w-full rounded-lg border border-dark-border bg-input-bg px-3.5 text-sm text-text-main placeholder:text-[#6E7681] outline-none focus:border-accent"
             />
 
           </div>
@@ -108,26 +99,23 @@ export const Tests = () => {
               onChange={(event) =>
                 setUsageFilter(event.target.value as UsageFilter)
               }
-              className="appearance-none h-[40px] w-[178px] bg-[#010409] 
-              border border-[#30363D] rounded-lg pl-3 pr-10 text-sm 
-              text-[#E6EDF3] outline-none focus:border-[#58A6FF] cursor-pointer"
+              className="h-10 w-44.5 cursor-pointer appearance-none rounded-lg border border-dark-border bg-input-bg pl-3 pr-10 text-sm text-text-main outline-none focus:border-accent"
             >
               <option value="all">Используется в</option>
               <option value="used">Используется</option>
               <option value="unused">Не используется</option>
             </select>
 
-            <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 
-            -translate-y-1/2 text-[#8B949E] pointer-events-none" />
+            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
 
           </div>
 
         </div>
 
         {/* Прокручиваемая таблица */}
-        <div className="flex-1 min-h-0 w-full overflow-auto">
+        <div className="min-h-0 w-full flex-1 overflow-auto">
 
-          <table className="w-full min-w-[750px] table-fixed text-left border-collapse">
+          <table className="w-full min-w-187.5 table-fixed border-collapse text-left">
 
             <colgroup>
               <col className="w-[53%]" />
@@ -136,23 +124,23 @@ export const Tests = () => {
               <col className="w-[20%]" />
             </colgroup>
 
-            <thead className="sticky top-0 z-10 bg-[#161B22]">
+            <thead className="sticky top-0 z-10 bg-dark-panel">
 
-              <tr className="h-[40px] border-b border-[#30363D] text-xs text-[#8B949E] uppercase tracking-wider">
+              <tr className="h-10 border-b border-dark-border text-xs uppercase tracking-wider text-text-muted">
 
-                <th className="py-2 px-4 font-semibold bg-[#161B22]">
+                <th className="bg-dark-panel px-4 py-2 font-semibold">
                   Название
                 </th>
 
-                <th className="py-2 px-3 font-semibold bg-[#161B22]">
+                <th className="bg-dark-panel px-3 py-2 font-semibold">
                   Вопр.
                 </th>
 
-                <th className="py-2 px-3 font-semibold bg-[#161B22]">
+                <th className="bg-dark-panel px-3 py-2 font-semibold">
                   Используется в
                 </th>
 
-                <th className="py-2 px-3 font-semibold bg-[#161B22]">
+                <th className="bg-dark-panel px-3 py-2 font-semibold">
                   Изменён
                 </th>
 
@@ -166,18 +154,18 @@ export const Tests = () => {
 
                 <tr
                   key={test.id}
-                  className="h-[62px] border-b border-[#30363D] hover:bg-[#161B22] transition-colors"
+                  className="h-15.5 border-b border-dark-border transition-colors hover:bg-dark-panel"
                 >
 
                   <td className="px-4 py-2">
 
                     <div className="flex flex-col gap-0.5">
 
-                      <span className="text-sm font-medium text-[#E6EDF3]">
+                      <span className="text-sm font-medium text-text-main">
                         {test.title}
                       </span>
 
-                      <span className="text-sm text-[#8B949E]">
+                      <span className="text-sm text-text-muted">
                         {test.subtitle}
                       </span>
 
@@ -185,7 +173,7 @@ export const Tests = () => {
 
                   </td>
 
-                  <td className="px-3 text-sm text-[#E6EDF3]">
+                  <td className="px-3 text-sm text-text-main">
                     {test.questionsCount}
                   </td>
 
@@ -193,7 +181,7 @@ export const Tests = () => {
                     <UsedInBadge count={test.usedIn} />
                   </td>
 
-                  <td className="px-3 text-sm text-[#8B949E] whitespace-nowrap">
+                  <td className="whitespace-nowrap px-3 text-sm text-text-muted">
                     {test.modifiedDate}
                   </td>
 
@@ -205,7 +193,7 @@ export const Tests = () => {
                 <tr>
                   <td
                     colSpan={4}
-                    className="py-12 text-center text-sm text-[#8B949E]"
+                    className="py-12 text-center text-sm text-text-muted"
                   >
                     Тесты не найдены
                   </td>

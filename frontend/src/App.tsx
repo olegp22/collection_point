@@ -1,6 +1,5 @@
 
 import {
-  BrowserRouter,
   Routes,
   Route,
   Navigate,
@@ -10,29 +9,27 @@ import { DashboardLayout } from './components/DashboardLayout';
 
 import { Home } from './pages/Home';
 import { Tests } from './pages/Tests';
+import { CreateTesting } from './pages/CreateTesting';
+import { TestingDetails } from './pages/TestingDetails';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-
-        <Route element={<DashboardLayout />}>
-
-          <Route path="/" element={<Home />} />
-
-          <Route path="/testing" element={<Home />} />
-
-          <Route path="/tests" element={<Tests />} />
-
-          <Route
-            path="*"
-            element={<Navigate to="/testing" replace />}
-          />
-
-        </Route>
-
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route element={<DashboardLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/testing" element={<Home />} />
+        <Route path="/testing/new" element={<CreateTesting />} />
+        <Route path="/tests" element={<Tests />} />
+        <Route
+          path="/testing/:id"
+          element={<TestingDetails />}
+        />
+        <Route
+          path="*"
+          element={<Navigate to="/testing" replace />}
+        />
+      </Route>
+    </Routes>
   );
 }
 
